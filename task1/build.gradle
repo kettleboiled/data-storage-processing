@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.78.1'
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.78.1'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
+}
+
+tasks.register('runServer', JavaExec) {
+    group = 'application'
+    description = 'Запуск KeyGenServer'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'io_server.KeyGenServer'
+}
+
+tasks.register('runClient', JavaExec) {
+    group = 'application'
+    description = 'Запуск KeyGenClient'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'client.KeyGenClient'
+}
