@@ -6,6 +6,7 @@ build/
 .kotlin
 
 ### IntelliJ IDEA ###
+.idea/
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
@@ -35,6 +36,8 @@ bin/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+.cpcache/
 
 ### VS Code ###
 .vscode/
